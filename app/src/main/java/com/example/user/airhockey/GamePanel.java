@@ -126,12 +126,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback,Sen
                 int ActRange=yCenter;
                 int opponentY=(int)(((double)opponentInitY/initRange)*ActRange);
 
-                double yTEST=((double)yCenter-opponentY)/(double)yCenter;
-                double yTEST2=0.4*yTEST;
-                double yTEST3=1-yTEST2;
+                double scale1=((double)yCenter-opponentY)/(double)yCenter;
+                double scale2=0.4*scale1;
+                double yTEST3=1-scale2;
 
                 int oppXmyBoard=ScreenConstants.SCREEN_WIDTH-oppXoppBoard;
-                int opponentX=(int)((yTEST2/2)*ScreenConstants.SCREEN_WIDTH+yTEST3*oppXmyBoard);
+                int opponentX=(int)((scale2/2)*ScreenConstants.SCREEN_WIDTH+yTEST3*oppXmyBoard);
 
 
 
@@ -156,12 +156,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback,Sen
                         actballposY=(int)(((double)oppBallPosY/ActRange)*initRange);
                         actballposY=ScreenConstants.SCREEN_HEIGHT-actballposY;
                     }
-                    double yTEST11=((double)yCenter-actballposY)/(double)yCenter;
-                    double yTEST22=0.4*yTEST11;
-                    double yTEST33=1-yTEST22;
+                    double scale11=((double)yCenter-actballposY)/(double)yCenter;
+                    double scale22=0.4*scale11;
+                    double scale33=1-scale22;
 
                     int ballXmyBoard=ScreenConstants.SCREEN_WIDTH-oppBallPosX;
-                    actballposX=(int)((yTEST22/2)*ScreenConstants.SCREEN_WIDTH+yTEST33*ballXmyBoard);
+                    actballposX=(int)((scale22/2)*ScreenConstants.SCREEN_WIDTH+scale33*ballXmyBoard);
 
                     ballPoint.set(actballposX,actballposY);
                 }
