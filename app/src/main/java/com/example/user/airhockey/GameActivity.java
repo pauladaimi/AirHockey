@@ -15,6 +15,7 @@ import java.net.UnknownHostException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+//Sets the Activity that will start the game and connections
 public class GameActivity extends Activity {
     ClientThread clientThread;
     ServerThread serverThread;
@@ -57,14 +58,16 @@ public class GameActivity extends Activity {
 
             host = intent.getBooleanExtra("IsHost", false);
 
+            //if host creates a new server thread
             if (host) {
                 serverThread = new ServerThread(port);
                 new Thread(serverThread).start();
-                setContentView(new GamePanel(this,manager,serverThread));
+                setContentView(new GamePanel(this,manager,serverThread,host));
+                //if client, connects to the server.
             } else {
                 clientThread = new ClientThread(hostAddress, port);
                 new Thread(clientThread).start();
-                setContentView(new GamePanel(this,manager,clientThread));
+                setContentView(new GamePanel(this,manager,clientThread,host));
             }
         }
 

@@ -15,6 +15,7 @@ import android.graphics.drawable.shapes.PathShape;
  * Created by User on 3/11/2018.
  */
 
+//This is the board
 public class Board implements GameObject {
     Path myBoard;
     Path opponentBoard;
@@ -38,6 +39,7 @@ public class Board implements GameObject {
     float xCenter;
     float yCenter;
 
+    //Creates myBoards, OpponentBoard, the Full Board, my Goal, Opponent goal and some decorations
     public Board(int color){
         this.color=color;
         xTopLeft=(float)(0.2*ScreenConstants.SCREEN_WIDTH);
@@ -60,6 +62,7 @@ public class Board implements GameObject {
         decoration=new RectF(xCenter-ScreenConstants.SCREEN_WIDTH/8,yCenter-ScreenConstants.SCREEN_HEIGHT/9,xCenter +ScreenConstants.SCREEN_WIDTH/6,yCenter+ScreenConstants.SCREEN_HEIGHT/10);
     }
 
+    //draws a trapezoid(boards)
     public Path drawTrapezoid(float x1,float y1,float x2,float y2,float x3,float y3, float x4, float y4){
         Path trapezoid = new Path();
         trapezoid.reset();
@@ -73,6 +76,7 @@ public class Board implements GameObject {
         return trapezoid;
     }
 
+    //draws all contents to the canvas
     @Override
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
@@ -93,6 +97,17 @@ public class Board implements GameObject {
 
     }
 
+    //no updates required
+    @Override
+    public void update(Point point) {
+    }
+
+    //returns the POV center
+    public double getYCenter(){
+        return yCenter;
+    }
+
+    //computes the POV center
     private void getCenter(){
         double slope1=ScreenConstants.SCREEN_HEIGHT/-xTopRight;
         double slope2=ScreenConstants.SCREEN_HEIGHT/(ScreenConstants.SCREEN_WIDTH-xTopLeft);
@@ -109,6 +124,7 @@ public class Board implements GameObject {
         getIntercepts();
     }
 
+    //returns the intercepts with the yCenter
     private void getIntercepts(){
         double length1=xTopRight-xTopLeft;
         double length2=ScreenConstants.SCREEN_WIDTH;
@@ -120,10 +136,12 @@ public class Board implements GameObject {
 
     }
 
+    //returns wether the ball entered the goal or not
     public boolean goalTouch(HockeyBall ball){
         return goalTouchBoard(ball)!=0;
     }
 
+    //returns which goal has been touched
     public int goalTouchBoard(HockeyBall ball){
         Region clip = new Region(0, 0, ScreenConstants.SCREEN_WIDTH, ScreenConstants.SCREEN_HEIGHT);
 
@@ -155,14 +173,25 @@ public class Board implements GameObject {
 
     }
 
+    //checks whether the ball is still on the board
     public String contains(HockeyBall ball){
         return contains(fullBoard,ball.getBall());
     }
 
+    //checks wether the player is still on the board
     public String contains(HockeyMallet player){
         return contains(myBoard,player.getMallet());
     }
 
+    //returns whether or not the ball is on my side
+    public boolean ballMyBoard(int X, int Y){
+        Region clip = new Region(0, 0, ScreenConstants.SCREEN_WIDTH, ScreenConstants.SCREEN_HEIGHT);
+        Region region1 = new Region();
+        region1.setPath(myBoard, clip);
+        return region1.contains(X,Y);
+    }
+
+    //returns where on the board did the ball/mallet hit
     private String contains(Path path,RectF shape) {
         Region clip = new Region(0, 0, ScreenConstants.SCREEN_WIDTH, ScreenConstants.SCREEN_HEIGHT);
 
@@ -208,8 +237,4 @@ public class Board implements GameObject {
 
     }
 
-    @Override
-    public void update() {
-
-    }
 }

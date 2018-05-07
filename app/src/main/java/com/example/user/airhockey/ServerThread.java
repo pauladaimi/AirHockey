@@ -11,6 +11,7 @@ import java.net.InetAddress;
  * Created by User on 4/2/2018.
  */
 
+//Class that runs the serverThread of a P2P Socket
 public class ServerThread implements Runnable,WifiThread {
     DatagramSocket socket;
 
@@ -30,16 +31,19 @@ public class ServerThread implements Runnable,WifiThread {
         mPort=initPort;
     }
 
+    //Sets message to be sent
     @Override
     public void setMessage(String message){
         sendData=message.getBytes();
     }
 
+    //recieves a message
     @Override
     public String receiveMessage() {
         return Player2String;
     }
 
+    //sends and receieves messages
     @Override
     public void run() {
         while(true){

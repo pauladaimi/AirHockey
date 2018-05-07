@@ -19,6 +19,7 @@ import java.util.List;
  * Created by User on 4/2/2018.
  */
 
+//Class that handles the Wifi P2P Setup and Connection
 public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
     private WifiP2pManager mManager;
     private WifiP2pManager.Channel mChannel;
@@ -37,6 +38,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
         this.mActivity=mainActivity;
     }
 
+//Connects you to a player of the n'th position on the list
     public void connect(int position){
         WifiP2pConfig config = mConfigs.get(position);
         mDevice=mPeers.get(position);
@@ -72,6 +74,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
         }
     };
 
+    //disconnects you from whoever you're connected with
     public void disconnect(){
         mManager.removeGroup(mChannel, new WifiP2pManager.ActionListener() {
             @Override
@@ -87,6 +90,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
         });
     }
 
+    //When we recieve a Wifi-Direct Request
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();

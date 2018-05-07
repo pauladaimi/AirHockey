@@ -18,6 +18,7 @@ import android.widget.ListView;
 
 import java.net.InetAddress;
 
+//This Class holds the Welcoming Activity
 public class MainActivity extends AppCompatActivity {
     public ListView mListView;
     private Button searchBtn;
@@ -43,13 +44,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         thisContext=this;
 
-        Point playerPoint = new Point(ScreenConstants.SCREEN_WIDTH/2,3*ScreenConstants.SCREEN_HEIGHT/4);
-        String point = playerPoint.x +" " + playerPoint.y;
-
-        String[] coordinates=point.split(" ");
-
-        Log.e("PLAYERPOINT",coordinates[0]+" "+coordinates[1]);
-
         gameStart = new Intent(this,GameActivity.class);
 
         mIntentFilter = new IntentFilter();
@@ -59,7 +53,9 @@ public class MainActivity extends AppCompatActivity {
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
 
+        //List View that holds the list of all available players around
         mListView=(ListView)findViewById(R.id.listView);
+        //Search button, when clicked, will turn on WifiDirect(if off) and search for players around
         searchBtn=(Button)findViewById(R.id.search_button);
 
         wifiP2pArrayAdapter= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
@@ -86,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //Method that will start the connection and goes to the game
     public void play(InetAddress hostAddress, Boolean host){
         gameStart.putExtra("HostAddress", hostAddress.getHostAddress());
         gameStart.putExtra("IsHost",host);
@@ -94,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(gameStart);
     }
 
+    //Searches for peers around you
     public void search(View view){
         mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
             @Override
@@ -108,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Displays the peers on the ViewList
     public void displayPeers(WifiP2pDeviceList peerList){
         wifiP2pArrayAdapter.clear();
 

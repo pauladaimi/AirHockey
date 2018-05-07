@@ -11,6 +11,7 @@ import java.net.InetAddress;
  * Created by User on 4/2/2018.
  */
 
+//Class that runs the clientThread of a P2P Socket
 public class ClientThread implements Runnable,WifiThread{
     InetAddress mHostAddress;
     int mPort;
@@ -28,6 +29,7 @@ public class ClientThread implements Runnable,WifiThread{
         mPort=port;
     }
 
+    //sends and receives messages
     @Override
     public void run() {
         if(mHostAddress!=null && mPort!=0){
@@ -78,11 +80,13 @@ public class ClientThread implements Runnable,WifiThread{
         }
     }
 
+    //Sets message to be sent
     @Override
     public void setMessage(String message) {
         sendData=message.getBytes();
     }
 
+    //receives a message
     @Override
     public String receiveMessage() {
         return player2String;

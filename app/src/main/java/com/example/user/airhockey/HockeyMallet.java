@@ -9,6 +9,7 @@ import android.graphics.RectF;
  * Created by User on 3/11/2018.
  */
 
+//This is the Hockey Handle, called Hocket Mallet
 public class HockeyMallet implements GameObject{
     private RectF mallet;
     private RectF handle;
@@ -18,6 +19,7 @@ public class HockeyMallet implements GameObject{
     private float originalSize;
     private float originalHandleSize;
 
+    //Creates a new mallet with a specific inner and outer color
     public HockeyMallet(RectF mallet, int malletColor,int handleColor){
         this.mallet=mallet;
         originalSize=mallet.height();
@@ -31,6 +33,7 @@ public class HockeyMallet implements GameObject{
         return mallet;
     }
 
+    //Draws the mallet onto the canvas
     @Override
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
@@ -42,11 +45,8 @@ public class HockeyMallet implements GameObject{
         canvas.drawOval(handle,paint);
     }
 
-    @Override
-    public void update() {
 
-    }
-
+    //Updates the mallet's position according to a certain point
     public void update(Point point){
         float mult=ScreenConstants.getMultiplier(point);
         mallet.set(point.x-originalSize*mult/2, point.y - originalSize*mult/2,point.x+originalSize*mult/2, point.y + originalSize*mult/2 );

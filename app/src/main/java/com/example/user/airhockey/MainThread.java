@@ -7,6 +7,7 @@ import android.view.SurfaceHolder;
  * Created by User on 3/11/2018.
  */
 
+//Main Thread that runs the FPS of the game
 public class MainThread extends Thread {
     public static final int MAX_FPS = 30;
     private double averageFPS;
@@ -21,10 +22,12 @@ public class MainThread extends Thread {
         this.gamePanel=gamePanel;
     }
 
+//whether we want to pause or continue
     public void setRunning(boolean running){
         this.running=running;
     }
 
+    //Runs forever with 30 frames per second.
     @Override
     public void run(){
         long startTime;
@@ -41,7 +44,9 @@ public class MainThread extends Thread {
             try{
                 canvas = this.surfaceHolder.lockCanvas();
                 synchronized (surfaceHolder){
+                    //Does an update
                     this.gamePanel.update();
+                    //then draws
                     this.gamePanel.draw(canvas);
 
                 }
